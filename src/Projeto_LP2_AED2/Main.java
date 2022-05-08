@@ -36,7 +36,6 @@ public class Main {
     public static SeparateChainingHashST<String, Poi> pois = new SeparateChainingHashST<>();
     public static SeparateChainingHashST<String, Rua> ruas = new SeparateChainingHashST<>();
     public static SeparateChainingHashST<String, Avenida> avenidas = new SeparateChainingHashST<>();
-    private static ArrayList<ligacoesNodes> ligacoes = new ArrayList<>();
 
     public static RedBlackBST<String, Etiqueta> etiquetas = new RedBlackBST<>();
 
@@ -378,66 +377,6 @@ public class Main {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    /*  LEITURA E ESCRITA DE FICHEIROS INFORMAÇÃO -- INPUT --  */
-
-    /**
-     * Leitura de dados de um ficheiro de INPUT, populando assim as ST's de basics, premiums e admins,
-     * assim como da ST de Nodes, seus ArrayLists de Etiquetas, as ligacoes das caches e os travelbugs;
-     *
-     * @param path Caminho para o ficheiro a ler;
-     */
-    public static void leituraFicheiroTxt(String path) {
-        In in = new In(path);
-
-        while (!in.isEmpty()) {
-            int l = Integer.parseInt(in.readLine());
-            for (int i = 0; i < l; i++) {
-                String line = in.readLine();
-                String[] fields = line.split(", ");
-                switch (fields[4]) {
-                    case "basic":
-                        Basic b = new Basic(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[4]);
-                        addUser(b);
-                    case "admin":
-                        Admin a = new Admin(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[4]);
-                        addUser(a);
-                        break;
-                }
-            }
-            int m = Integer.parseInt(in.readLine());
-            for (int i = 0; i < m; i++) {
-                String line = in.readLine();
-                String[] aux = line.split(", ");
-                for (int j = 0; j < Integer.parseInt(aux[1]); j++) {
-                    String line2 = in.readLine();
-                    String[] field = line2.split(", ");
-                    Poi p = new Poi(aux[0], field[1], Float.parseFloat(field[3]),
-                            Float.parseFloat(field[4]), field[5]);
-                    addNode(p);
-                    for (int k = 0; k < Integer.parseInt(field[4]); k++) {
-                        Etiqueta e = new Etiqueta(Integer.parseInt(field[6 + k]), field[7 + k], field[8 + k], field[9 + k],
-                                Float.parseFloat(field[10 + k]), Float.parseFloat(field[11 + k]));
-                        p.getMyEtiqueta().add(e);
-                    }
-                }
-            }
-            int p = Integer.parseInt(in.readLine());
-            for (int i = 0; i < p; i++) {
-                String[] aux = in.readLine().split(", ");
-                ligacoesNodes ligacoesNode = new ligacoesNodes(aux[0], aux[1],
-                        Float.parseFloat(aux[2]), Integer.parseInt(aux[3]));
-                ligacoes.add(ligacoesNode);
-            }
-            int k = Integer.parseInt(in.readLine());
-            for (int i = 0; i < k; i++) {
-                String[] aux = in.readLine().split(", ");
-                Etiqueta et = new Etiqueta(Integer.parseInt(aux[0]), aux[1], aux[2], aux[3], Float.parseFloat(aux[4]),
-                        Float.parseFloat(aux[5]));
-                etiquetas.put(et.getNome(), et);
-            }
-        }
-    }
-
     /**
      * Encontrar de todas as ST's, o objeto que tem o nome igual ao que é passado por parametros;
      *
@@ -519,13 +458,6 @@ public class Main {
         wr.close();
     }
 
-    public static void escritaFicheiroTxtLigacoesNodes() throws IOException {
-        FileWriter wr = new FileWriter(ligacoesnodestxt, false);
-        for (ligacoesNodes l : ligacoes) {
-            wr.write(l.Inicial + ", " + l.Final + ", " + l.distancia + ", " + l.min + "\n");
-        }
-        wr.close();
-    }
 
     /**
      * Função percorre todas os objetos do tipo Nodes presentes na ST de Nodes, encontrando as
@@ -535,7 +467,7 @@ public class Main {
      * @param data data condicional para obter os Nodes presentes na mesma;
      * @return ArrayList com os Objetos Node presentes na data;
      */
-    public static ArrayList<Poi> getCachesInData(Date data) {
+    public static ArrayList<Poi> getNodesInData(Date data) {
         ArrayList<Poi> poisInData = new ArrayList<>();
         for (String s : pois.keys()) {
             for (Integer log : pois.get(s).getLogs().keys()) {
@@ -653,39 +585,6 @@ public class Main {
         }
     }
 
-
-    /**
-     * Class auxiliar para melhor manipulação de dados sobre distancias entre Nodes;
-     */
-    public static class ligacoesNodes {
-        String Inicial;
-        String Final;
-        float distancia;
-        int min;
-
-        public ligacoesNodes(String Inicial, String Final, float distancia, int min) {
-            this.Inicial = Inicial;
-            this.Final = Final;
-            this.distancia = distancia;
-            this.min = min;
-        }
-
-        public String getGeocacheInicial() {
-            return Inicial;
-        }
-
-        public String getGeocacheFinal() {
-            return Final;
-        }
-
-        public float getDistancia() {
-            return distancia;
-        }
-
-        public int getMin() {
-            return min;
-        }
-    }
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
