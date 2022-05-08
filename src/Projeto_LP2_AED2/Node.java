@@ -5,25 +5,22 @@ import algs4.RedBlackBST;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Node implements Serializable{
 
-    private static int countUser = 0;
+    private static int count = 0;
     private int Id;
 
     private String Nome;
 
     private ArrayList<Etiqueta> myEtiqueta = new ArrayList<>();
 
-    private ArrayList<Ways> myWays = new ArrayList<>();
-
     private RedBlackBST<Integer, Log> logs = new RedBlackBST<>();
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
     public Node(String nome) {
-        Id = ++countUser;
+        Id = ++count;
         Nome = nome;
     }
 
@@ -43,13 +40,17 @@ public class Node implements Serializable{
 
     public void setMyEtiqueta(ArrayList<Etiqueta> myEtiqueta) {this.myEtiqueta = myEtiqueta;}
 
-    public ArrayList<Ways> getMyWays() {return myWays;}
-
-    public void setMyWays(ArrayList<Ways> myWays) {this.myWays = myWays;}
-
     public RedBlackBST<Integer, Log> getLogs() {return logs;}
 
     public void setLogs(RedBlackBST<Integer, Log> logs) {this.logs = logs;}
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "Id=" + Id +
+                ", Nome='" + Nome + '\'' +
+                '}';
+    }
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
@@ -125,5 +126,4 @@ public class Node implements Serializable{
     }
 }
 
-    /*---------------------------------------------------------------------------------------------------------------*/
 

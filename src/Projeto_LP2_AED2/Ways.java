@@ -1,21 +1,50 @@
 package Projeto_LP2_AED2;
 
-import java.util.Vector;
+import algs4.RedBlackBST;
 
-public class Ways /*extends Nodes, Etiquetas*/ {
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
 
-  public int Velocidade;
+public class Ways implements Serializable {
 
-  public int Id;
+    private static int count = 0;
 
-  public String Tipo;
+    private int Id;
 
-  public Vector  myNodes;
+    private String Nome;
 
-  public Vector  myEtiquetas;
+    private int Velocidade;
+
+    private ArrayList<Etiqueta> myEtiqueta = new ArrayList<>();
 
 
-  public void newOperation() {
-  }
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    public Ways(String nome, int velocidade) {
+        Id = ++count;
+        Nome = nome;
+        Velocidade = velocidade;
+    }
+
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    public int getVelocidade() {return Velocidade;}
+
+    public void setVelocidade(int velocidade) {Velocidade = velocidade;}
+
+    public int getId() {return Id;}
+
+    public void setId(int id) {Id = id;}
+
+    public String getNome() {return Nome;}
+
+    public void setNome(String tipo) {Nome = tipo;}
+
+    public ArrayList<Etiqueta> getMyEtiqueta() {return myEtiqueta;}
+
+    public void setMyEtiqueta(ArrayList<Etiqueta> myEtiqueta) {this.myEtiqueta = myEtiqueta;}
+
+    /*---------------------------------------------------------------------------------------------------------------*/
 
 }

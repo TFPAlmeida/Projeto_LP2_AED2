@@ -23,6 +23,13 @@ public class Etiqueta {
         this.GPS = new Point(latitude, longitude);
     }
 
+    public Etiqueta(int id, String nome, String nomeCriador, String descricao) {
+        Id = id;
+        Nome = nome;
+        this.nomeCriador = nomeCriador;
+        Descricao = descricao;
+    }
+
     /*---------------------------------------------------------------------------------------------------------------*/
 
     public int getId() {

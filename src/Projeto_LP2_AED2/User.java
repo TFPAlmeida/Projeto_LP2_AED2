@@ -23,9 +23,8 @@ public abstract class User {
 
     private String veiculo;
 
-    private ArrayList<Ways> myWays = new ArrayList<>();
-
     private ArrayList<Poi> poisVisitados = new ArrayList<>();
+
     private ArrayList<Etiqueta> Etiquetas = new ArrayList<>();
 
 
@@ -109,7 +108,7 @@ public abstract class User {
      * -- MANIPULAÇAO REDBLACK ETIQUETAS --
      */
 
-    public void createEtiquetas(RedBlackBST<String, Etiqueta> etiquetas, Object Node, String descricao, String nome) {
+    public void createEtiquetasNodes(RedBlackBST<String, Etiqueta> etiquetas, Object Node, String descricao, String nome) {
         int id = ++countEtiqueta;
         if(Node instanceof Poi){
             Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao, ((Poi) Node).getGPS().getLatitude(),
@@ -119,6 +118,28 @@ public abstract class User {
                 return;
             }
             ((Poi) Node).getMyEtiqueta().add(ET);
+            etiquetas.put(nome, ET);
+        }
+    }
+
+    public void createEtiquetasWays(RedBlackBST<String, Etiqueta> etiquetas, Object Ways, String descricao, String nome) {
+        int id = ++countEtiqueta;
+        if(Ways instanceof Rua){
+            Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao);
+            if (etiquetas.contains(nome) || this.getEtiquetas().contains(ET)) {
+                System.out.println("Erro, Etiqueta ja existe na DB!");
+                return;
+            }
+            ((Rua) Ways).getMyEtiqueta().add(ET);
+            etiquetas.put(nome, ET);
+        }
+        else if(Ways instanceof Avenida){
+            Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao);
+            if (etiquetas.contains(nome) || this.getEtiquetas().contains(ET)) {
+                System.out.println("Erro, Etiqueta ja existe na DB!");
+                return;
+            }
+            ((Avenida) Ways).getMyEtiqueta().add(ET);
             etiquetas.put(nome, ET);
         }
     }
