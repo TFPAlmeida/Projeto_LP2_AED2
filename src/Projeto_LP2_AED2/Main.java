@@ -9,6 +9,9 @@ import javax.xml.crypto.Data;
 import java.awt.dnd.DropTargetEvent;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -606,7 +609,7 @@ public class Main {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
 
         /*------------------------------------------------------------------------------------------------------------*/
         /** USERS */
@@ -693,15 +696,22 @@ public class Main {
         Poi p30 = new Poi("p30","Escola",41.1710618f,-8.6126606f, "Autocarro");
         addNode(p30);
         /*------------------------------------------------------------------------------------------------------------*/
-        b1.createEtiquetas(etiquetas,p1,"Transito", "e1");
+        //b1.createEtiquetas(etiquetas,p1,"Transito", "e1");
         a1.createEtiquetas(etiquetas,p5,"Transito", "e2");
         a1.createEtiquetas(etiquetas,p5,"Boca de Incendio Perto", "e3");
         a1.createEtiquetas(etiquetas,p5,"Combustivel Barato", "e4");
         /*------------------------------------------------------------------------------------------------------------*/
+        b1.visitarPoi(p1,null);
+        b1.visitarPoi(p8,null);
+        String date_string = "08-05-2022";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = formatter.parse(date_string);
+        //System.out.println("Date value: "+date);
+        b1.listarPoisVisitados(date);
 
         //listarAdminUsers();
         //listarPois();
-        listarEtiquetas();
+        //listarEtiquetas();
     }
 
 }

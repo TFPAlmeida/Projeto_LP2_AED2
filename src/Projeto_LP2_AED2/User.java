@@ -4,6 +4,7 @@ import algs4.RedBlackBST;
 import algs4.SeparateChainingHashST;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -139,10 +140,11 @@ public abstract class User {
      */
 
     public void visitarPoi(Poi p, String Mensagem) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         if (this.veiculo.equals(p.getVeiculo())) {
             this.getPoisVisitados().add(p);
             LocalDateTime date = LocalDateTime.now();
-            Date dateAtual = new Date(date.getYear() + 1900, date.getMonthValue(), date.getDayOfMonth());
+            Date dateAtual = new Date(dtf.format(date));
             String info = this.Nome;
             Log log = new Log(dateAtual, info, Mensagem);
             p.getLogs().put(log.getId(), log);
