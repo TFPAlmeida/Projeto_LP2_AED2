@@ -18,7 +18,7 @@ public abstract class User {
 
     private String Nome;
 
-    private Point GPS;
+    private Point GPS = new Point();
 
     private String veiculo;
 
@@ -33,8 +33,8 @@ public abstract class User {
     public User(String nome, float latitude, float longitude, String veiculo) {
         this.Id = ++countUser;
         Nome = nome;
-        //this.GPS.setLatitude(latitude);
-        //this.GPS.setLongitude(longitude);
+        this.GPS.setLatitude(latitude);
+        this.GPS.setLongitude(longitude);
         this.veiculo = veiculo;
     }
 
@@ -89,7 +89,7 @@ public abstract class User {
 
     public void tostring() {
         System.out.println("Utilizador {\n" + "\tID=" + Id + ", Nome: " + Nome  + ";\n" +
-                 /*"GPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + */"\tEtiquetas do Utilizador:");
+                 "GPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\tEtiquetas do Utilizador:");
         for (Etiqueta e : this.getEtiquetas()) {
 
                 System.out.println("\t\t" + e.getId() + ", " +e.getDescricao() + ";");

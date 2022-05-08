@@ -150,7 +150,7 @@ public class Main {
     public static void listarPois() {
         System.out.println("Nodes: \n");
         for (String poi : pois.keys()) {
-            pois.get(poi).toString();
+            pois.get(poi).tostring();
         }
     }
 
@@ -575,6 +575,10 @@ public class Main {
         }
     }
 
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+
+    /*  ADD / EDITAR / REMOVER / LISTAR --Etiquetas--  */
 
     /**
      * Remover um Etiquetas da DB
@@ -593,11 +597,21 @@ public class Main {
         }
     }
 
+    public static void listarEtiquetas() {
+        System.out.println("Etiquetas: \n");
+        for (String s : etiquetas.keys()) {
+            etiquetas.get(s).tostring();
+        }
+    }
+
+    /*---------------------------------------------------------------------------------------------------------------*/
+
     public static void main(String[] args) throws IOException {
 
-
+        /*------------------------------------------------------------------------------------------------------------*/
+        /** USERS */
         //Manuel
-        Basic b1 = new Basic("Manuel",0,0,"CarroEletrico");
+        Basic b1 = new Basic("Manuel",41.1740298f,-8.6132806f,"CarroEletrico");
         addUser(b1);
         //Pedro
         Basic b2 = new Basic("Pedro",0,0,"CarroEletrico");
@@ -606,7 +620,7 @@ public class Main {
         Basic b3 = new Basic("Filomena",0,0,"CarroEletrico");
         addUser(b3);
         //Fernando
-        Admin a1 = new Admin("Fernando",0,0,"CarroEletrico");
+        Admin a1 = new Admin("Fernando",41.1740298f,-8.6132806f,"CarroEletrico");
         addUser(a1);
         //Joana
         Admin a2 = new Admin("Joana",0,0,"CarroEletrico");
@@ -615,7 +629,79 @@ public class Main {
         Admin a3 = new Admin("Maria",0,0,"CarroEletrico");
         addUser(a3);
 
-        listarAdminUsers();
+        /*------------------------------------------------------------------------------------------------------------*/
+        /** Nodes */
+
+        Poi p1 = new Poi("p1","EstacaoEletrica",41.1740298f,-8.6132806f, "CarroEletrico");
+        addNode(p1);
+        Poi p2 = new Poi("p2","EstacaoEletrica",41.1722618f,-8.6126820f, "BicicletaEletrica");
+        addNode(p2);
+        Poi p3 = new Poi("p3","Escola",41.1710753f,-8.6128402f, "Autocarro");
+        addNode(p3);
+        Poi p4 = new Poi("p4","Cinema",41.1703690f,-8.6129333f, "Autocarro");
+        addNode(p4);
+        Poi p5 = new Poi("p5","EstacaoEletrica",41.1699072f,-8.6129174f, "BicicletaEletrica");
+        addNode(p5);
+        Poi p6 = new Poi("p6","Museu",41.1696617f,-8.6128633f, "Autocarro");
+        addNode(p6);
+        Poi p7 = new Poi("p7","EstacaoEletrica",41.1670140f,-8.6117522f, "BicicletaEletrica");
+        addNode(p7);
+        Poi p8 = new Poi("p8","Cinema",41.1727151f,-8.6127041f, "CarroEletrico");
+        addNode(p8);
+        Poi p9 = new Poi("p9","EstacaoEletrica",41.1726118f,-8.6111237f, "BicicletaEletrica");
+        addNode(p9);
+        Poi p10 = new Poi("p10","Museu",41.1709836f,-8.6113112f, "CarroEletrico");
+        addNode(p10);
+        Poi p11 = new Poi("p11","Escola",41.1711021f,-8.6128045f, "CarroEletrico");
+        addNode(p11);
+        Poi p12 = new Poi("p12","EstacaoEletrica",41.1722967f,-8.6126472f, "BicicletaEletrica");
+        addNode(p12);
+        Poi p13 = new Poi("p13","EstacaoEletrica",41.1718292f,-8.6127436f, "CarroEletrico");
+        addNode(p13);
+        Poi p14 = new Poi("p14","Escola",41.1739403f,-8.6103814f, "CarroEletrico");
+        addNode(p14);
+        Poi p15 = new Poi("p15","Museu",41.1727672f,-8.6103785f, "BicicletaEletrica");
+        addNode(p15);
+        Poi p16 = new Poi("p16","Museu",41.1677569f,-8.6107657f, "CarroEletrico");
+        addNode(p16);
+        Poi p17 = new Poi("p17","Escola",41.1695191f,-8.6084611f, "BicicletaEletrica");
+        addNode(p17);
+        Poi p18 = new Poi("p18","Cinema",41.1709494f,-8.6112781f, "Autocarro");
+        addNode(p18);
+        Poi p19 = new Poi("p19","EstacaoEletrica",41.1712961f,-8.6128154f, "CarroEletrico");
+        addNode(p19);
+        Poi p20 = new Poi("p20","Cinema",41.1738924f,-8.6132242f, "BicicletaEletrica");
+        addNode(p20);
+        Poi p21 = new Poi("p21","EstacaoEletrica",41.1736241f,-8.6131209f, "BicicletaEletrica");
+        addNode(p21);
+        Poi p22 = new Poi("p22","Escola",41.1728369f,-8.6128570f, "BicicletaEletrica");
+        addNode(p22);
+        Poi p23 = new Poi("p23","EstacaoEletrica",41.1727692f,-8.6128188f, "CarroEletrico");
+        addNode(p23);
+        Poi p24 = new Poi("p24","Cinema",41.1729352f,-8.6095116f, "CarroEletrico");
+        addNode(p24);
+        Poi p25 = new Poi("p25","Escola",41.1729427f,-8.6094669f, "BicicletaEletrica");
+        addNode(p25);
+        Poi p26 = new Poi("p26","EstacaoEletrica",41.1729674f,-8.6093197f, "CarroEletrico");
+        addNode(p26);
+        Poi p27 = new Poi("p27","Museu",41.1717464f,-8.6127544f, "BicicletaEletrica");
+        addNode(p27);
+        Poi p28 = new Poi("p28","EstacaoEletrica",41.1736583f,-8.6103807f, "BicicletaEletrica");
+        addNode(p28);
+        Poi p29 = new Poi("p29","EstacaoEletrica",41.1728373f,-8.6103787f, "CarroEletrico");
+        addNode(p29);
+        Poi p30 = new Poi("p30","Escola",41.1710618f,-8.6126606f, "Autocarro");
+        addNode(p30);
+        /*------------------------------------------------------------------------------------------------------------*/
+        b1.createEtiquetas(etiquetas,p1,"Transito", "e1");
+        a1.createEtiquetas(etiquetas,p5,"Transito", "e2");
+        a1.createEtiquetas(etiquetas,p5,"Boca de Incendio Perto", "e3");
+        a1.createEtiquetas(etiquetas,p5,"Combustivel Barato", "e4");
+        /*------------------------------------------------------------------------------------------------------------*/
+
+        //listarAdminUsers();
+        //listarPois();
+        listarEtiquetas();
     }
 
 }

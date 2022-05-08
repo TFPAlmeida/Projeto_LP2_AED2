@@ -13,6 +13,11 @@ public class Point {
     this.Longitude = longitude;
   }
 
+  public Point() {
+
+  }
+
+
   /*---------------------------------------------------------------------------------------------------------------*/
 
   public float distanciaEntrePontos(Point p1, Point p2) {

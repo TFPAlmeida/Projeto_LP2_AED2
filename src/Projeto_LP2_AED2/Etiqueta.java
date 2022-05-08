@@ -65,6 +65,14 @@ public class Etiqueta {
         Nome = nome;
     }
 
+    public void tostring() {
+        System.out.println("Etiqueta {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome()  + ", Nome do Criador: " + nomeCriador +";\n"+
+                "\tDescricao: " + Descricao +
+                "\n\tGPS: " + GPS.getLatitude() + " | " + GPS.getLongitude());
+
+        System.out.println("\n}\n");
+    }
+
     /*---------------------------------------------------------------------------------------------------------------*/
 
 

@@ -1,7 +1,6 @@
 package Projeto_LP2_AED2;
 
 import algs4.RedBlackBST;
-
 import java.sql.Date;
 
 public class Poi extends Node {
@@ -9,7 +8,7 @@ public class Poi extends Node {
 
   private String Tipo;
 
-  private Point GPS;
+  private Point GPS = new Point();
 
   private String Veiculo;
 
@@ -38,17 +37,21 @@ public class Poi extends Node {
 
   public void setVeiculo(String veiculo) {Veiculo = veiculo;}
 
-  @Override
-  public String toString() {
-    return "Poi{" +
-            "Id=" + this.getTipo() +
-            ", Nome='" + this.getNome() + '\'' +
-            ", Tipo='" + Tipo + '\'' +
-            ", GPS=" + GPS +
-            ", Veiculo='" + Veiculo + '\'' +
-            '}';
-  }
 
+  public void tostring() {
+    System.out.println("POI {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome()  + ", Tipo: " + Tipo +";\n"+
+            "\tGPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\n\tEtiquetas do Poi:");
+    for (Etiqueta e : this.getMyEtiqueta()) {
+
+      System.out.println("\t\t" + e.getId() + ", " +e.getDescricao() + ";");
+    }
+    if (this.getMyEtiqueta().isEmpty()) {
+      System.out.println("\t\tPoi nao tem Etiquetas publicadas!");
+      System.out.println("\n}\n");
+      return;
+    }
+    System.out.println("\n}\n");
+  }
   /*---------------------------------------------------------------------------------------------------------------*/
 
 }

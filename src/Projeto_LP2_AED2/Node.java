@@ -113,11 +113,11 @@ public class Node implements Serializable{
     }
 
     /**
-     * Lista todos os items no ecra.
+     * Lista todos os Etiquetas no ecra.
      */
 
-    public void listaritems() {
-        System.out.print("Items:  ");
+    public void listarEtiquetas() {
+        System.out.print("Etiquetas:  ");
         for (Etiqueta i : this.getMyEtiqueta()) {
             System.out.print(i.getDescricao() + "; ");
         }
