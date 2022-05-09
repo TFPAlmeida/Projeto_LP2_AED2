@@ -4,7 +4,6 @@ package Projeto_LP2_AED2;
 import algs4.In;
 import algs4.RedBlackBST;
 import algs4.SeparateChainingHashST;
-
 import javax.xml.crypto.Data;
 import java.awt.dnd.DropTargetEvent;
 import java.io.FileWriter;
@@ -19,21 +18,25 @@ import java.util.Iterator;
 public class Main {
 
     //Path
-    private static String inputxt = (".//data//input.txt");
-    private static String utilizadorestxt = (".//data//utilizadores.txt");
-    private static String nodestxt = (".//data//nodes.txt");
-    private static String etiquetastxt = (".//data//etiquetas.txt");
-    private static String ligacoesnodestxt = (".//data//ligacoescaches.txt");
+    private static String inputNodestxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\inputNodes.txt");
+    private static String inputWaystxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\inputWays.txt");
+    private static String utilizadorestxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\utilizadores.txt");
+    private static String nodestxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\nodes.txt");
+    private static String etiquetastxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\etiquetas.txt");
+    private static String waystxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\ways.txt");
 
-    private static String utilizadoresRemovidostxt = (".//data//utilizadoresRemovidos.txt");
-    private static String nodesRemovidastxt = (".//data//nodesRemovidas.txt");
-    private static String waysRemovidastxt = (".//data//waysRemovidas.txt");
-    private static String etiquetasRemovidostxt = (".//data//etiquetasRemovidos.txt");
+    private static String utilizadoresRemovidostxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\utilizadoresRemovidos.txt");
+    private static String nodesRemovidastxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\nodesRemovidas.txt");
+    private static String waysRemovidastxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\waysRemovidas.txt");
+    private static String etiquetasRemovidostxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\etiquetasRemovidos.txt");
 
     public static SeparateChainingHashST<Integer, Basic> basics = new SeparateChainingHashST<>();
     public static SeparateChainingHashST<Integer, Admin> admins = new SeparateChainingHashST<>();
 
     public static SeparateChainingHashST<String, Poi> pois = new SeparateChainingHashST<>();
+    public static SeparateChainingHashST<String, Curva> curvas = new SeparateChainingHashST<>();
+    public static SeparateChainingHashST<String, Cruzamento> cruzamentos = new SeparateChainingHashST<>();
+    public static SeparateChainingHashST<String, Entroncamento> entroncamentos = new SeparateChainingHashST<>();
     public static SeparateChainingHashST<String, Rua> ruas = new SeparateChainingHashST<>();
     public static SeparateChainingHashST<String, Avenida> avenidas = new SeparateChainingHashST<>();
 
@@ -100,10 +103,31 @@ public class Main {
     public static void addNode(Object Node) {
         if (Node instanceof Poi) {
             if (pois.contains(((Poi) Node).getNome())) {
-                System.out.println("Erro, cache ja existe na DB!");
+                System.out.println("Erro, Poi ja existe na DB!");
                 return;
             }
             pois.put(((Poi) Node).getNome(), ((Poi) Node));
+        }
+        else if(Node instanceof Cruzamento){
+            if(cruzamentos.contains(((Cruzamento) Node).getNome())){
+                System.out.println("Erro, Cruzamento ja existe na DB!");
+                return;
+            }
+            cruzamentos.put(((Cruzamento) Node).getNome(), ((Cruzamento) Node));
+        }
+        else if(Node instanceof Entroncamento){
+            if(entroncamentos.contains(((Entroncamento) Node).getNome())){
+                System.out.println("Erro, Entroncamento ja existe na DB!");
+                return;
+            }
+            entroncamentos.put(((Entroncamento) Node).getNome(), ((Entroncamento) Node));
+        }
+        else if(Node instanceof Curva){
+            if(curvas.contains(((Curva) Node).getNome())){
+                System.out.println("Erro, Entroncamento ja existe na DB!");
+                return;
+            }
+            curvas.put(((Curva) Node).getNome(), ((Curva) Node));
         }
 
     }
@@ -125,6 +149,48 @@ public class Main {
                 wr.close();
                 pois.delete(((Poi) Node).getNome());
             } else System.out.println("Erro, o node nao existe nao DB!");
+        }
+        else if(Node instanceof Cruzamento){
+            FileWriter wr = new FileWriter(nodesRemovidastxt, true);
+            wr.write(((Cruzamento) Node).getId() + ", " + ((Cruzamento) Node).getNome() + ";\n");
+            wr.write(((Cruzamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
+            for (Etiqueta e : ((Cruzamento) Node).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + ((Cruzamento) Node).getLogs().size() + " Logs :\n");
+            for (int i : ((Cruzamento) Node).getLogs().keys()) {
+                wr.write(((Cruzamento) Node).getLogs().get(i).toString());
+            }
+            wr.close();
+            cruzamentos.delete(((Cruzamento) Node).getNome());
+        }
+        else if(Node instanceof Entroncamento){
+            FileWriter wr = new FileWriter(nodesRemovidastxt, true);
+            wr.write(((Entroncamento) Node).getId() + ", " + ((Entroncamento) Node).getNome() + ";\n");
+            wr.write(((Entroncamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
+            for (Etiqueta e : ((Entroncamento) Node).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + ((Entroncamento) Node).getLogs().size() + " Logs :\n");
+            for (int i : ((Entroncamento) Node).getLogs().keys()) {
+                wr.write(((Entroncamento) Node).getLogs().get(i).toString());
+            }
+            wr.close();
+            entroncamentos.delete(((Entroncamento) Node).getNome());
+        }
+        else if(Node instanceof Curva){
+            FileWriter wr = new FileWriter(nodesRemovidastxt, true);
+            wr.write(((Curva) Node).getId() + ", " + ((Curva) Node).getNome() + ";\n");
+            wr.write(((Curva) Node).getMyEtiqueta().size() + " etiquetas :\n");
+            for (Etiqueta e : ((Curva) Node).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + ((Curva) Node).getLogs().size() + " Logs :\n");
+            for (int i : ((Curva) Node).getLogs().keys()) {
+                wr.write(((Curva) Node).getLogs().get(i).toString());
+            }
+            wr.close();
+            curvas.delete(((Curva) Node).getNome());
         }
     }
 
@@ -151,12 +217,61 @@ public class Main {
             pois.get(name).getGPS().setLatitude(longitude);
             pois.get(name).setVeiculo(veiculo);
         }
+        else if(Node instanceof Cruzamento){
+            String name = ((Cruzamento) Node).getNome();
+            if (!cruzamentos.contains(name)) {
+                System.out.println("Erro Node nao registado na DB!");
+                return;
+            }
+            cruzamentos.get(name).setNome(nome);
+            cruzamentos.get(name).getGPS().setLatitude(latitude);
+            cruzamentos.get(name).getGPS().setLatitude(longitude);
+        }
+        else if(Node instanceof Entroncamento){
+            String name = ((Entroncamento) Node).getNome();
+            if (!entroncamentos.contains(name)) {
+                System.out.println("Erro Node nao registado na DB!");
+                return;
+            }
+            entroncamentos.get(name).setNome(nome);
+            entroncamentos.get(name).getGPS().setLatitude(latitude);
+            entroncamentos.get(name).getGPS().setLatitude(longitude);
+        }
+        else if(Node instanceof Curva){
+            String name = ((Curva) Node).getNome();
+            if (!curvas.contains(name)) {
+                System.out.println("Erro Node nao registado na DB!");
+                return;
+            }
+            curvas.get(name).setNome(nome);
+        }
     }
 
     public static void listarPois() {
         System.out.println("Nodes: \n");
         for (String poi : pois.keys()) {
             pois.get(poi).tostring();
+        }
+    }
+
+    public static void listarEntroncamentos() {
+        System.out.println("Nodes: \n");
+        for (String entrocamento : entroncamentos.keys()) {
+            entroncamentos.get(entrocamento).tostring();
+        }
+    }
+
+    public static void listarCruzamentos() {
+        System.out.println("Nodes: \n");
+        for (String cruzamento : cruzamentos.keys()) {
+            cruzamentos.get(cruzamento).tostring();
+        }
+    }
+
+    public static void listarCurvas() {
+        System.out.println("Nodes: \n");
+        for (String curva : curvas.keys()) {
+            curvas.get(curva).tostring();
         }
     }
 
@@ -445,6 +560,180 @@ public class Main {
     }
 
     /**
+     * Escrita de toda a informação presente nas ST Pois;
+     */
+    public static void escritaFicheiroTxtCurvas() throws IOException {
+
+        FileWriter wr = new FileWriter(nodestxt, true);
+        int nNodes = curvas.size();
+        wr.write(nNodes + "\n");
+        for (String s : curvas.keys()) {
+            wr.write(curvas.get(s).getId() + ", " + curvas.get(s).getNome() + ", "
+                  + String.valueOf(curvas.get(s).getGPS().size()));
+            for (Point p : curvas.get(s).getGPS()) {
+                wr.write("Gps: " + p.getLatitude() + " | " + p.getLongitude() + "\n");
+            }
+            wr.write("\n" + curvas.get(s).getMyEtiqueta().size() + "\n");
+            for (Etiqueta e : curvas.get(s).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + curvas.get(s).getLogs().size() + "\n");
+            for (int i : curvas.get(s).getLogs().keys()) {
+                wr.write(curvas.get(s).getLogs().get(i).toString());
+            }
+        }
+        wr.close();
+    }
+
+    /**
+     * Escrita de toda a informação presente nas ST Pois;
+     */
+    public static void escritaFicheiroTxtCruzamentos() throws IOException {
+
+        FileWriter wr = new FileWriter(nodestxt, true);
+        int nNodes = cruzamentos.size();
+        wr.write(nNodes + "\n");
+        for (String s : cruzamentos.keys()) {
+            wr.write(cruzamentos.get(s).getId() + ", " + cruzamentos.get(s).getNome() + ", "+
+                    cruzamentos.get(s).getGPS().getLatitude() + ", " +
+                    cruzamentos.get(s).getGPS().getLongitude() + ", " + String.valueOf(cruzamentos.get(s).getMyEtiqueta().size()));
+            for (Etiqueta e : cruzamentos.get(s).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + cruzamentos.get(s).getLogs().size() + "\n");
+            for (int i : cruzamentos.get(s).getLogs().keys()) {
+                wr.write(cruzamentos.get(s).getLogs().get(i).toString());
+            }
+        }
+        wr.close();
+    }
+
+    /**
+     * Escrita de toda a informação presente nas ST Pois;
+     */
+    public static void escritaFicheiroTxtEntroncamentos() throws IOException {
+
+        FileWriter wr = new FileWriter(nodestxt, true);
+        int nNodes = entroncamentos.size();
+        wr.write(nNodes + "\n");
+        for (String s : entroncamentos.keys()) {
+            wr.write(entroncamentos.get(s).getId() + ", " + entroncamentos.get(s).getNome() + ", " +
+                    entroncamentos.get(s).getGPS().getLatitude() + ", " +
+                    entroncamentos.get(s).getGPS().getLongitude() + ", " + String.valueOf(entroncamentos.get(s).getMyEtiqueta().size()));
+            for (Etiqueta e : entroncamentos.get(s).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+            wr.write("\n" + entroncamentos.get(s).getLogs().size() + "\n");
+            for (int i : entroncamentos.get(s).getLogs().keys()) {
+                wr.write(entroncamentos.get(s).getLogs().get(i).toString());
+            }
+        }
+        wr.close();
+    }
+
+    public static void escritaFicheiroTxtRuas() throws IOException {
+
+        FileWriter wr = new FileWriter(waystxt, true);
+        int nNodes = ruas.size();
+        wr.write(nNodes + "\n");
+        for (String s : ruas.keys()) {
+            wr.write(ruas.get(s).getId() + ", " + ruas.get(s).getNome() + ", "  +
+                    ruas.get(s).getNode1().toString() + ", " +
+                    ruas.get(s).getNode2().toString() + ", " + String.valueOf(ruas.get(s).getMyEtiqueta().size()));
+            for (Etiqueta e : ruas.get(s).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+        }
+        wr.close();
+    }
+
+    public static void escritaFicheiroTxtAvenidas() throws IOException {
+
+        FileWriter wr = new FileWriter(waystxt, true);
+        int nNodes = avenidas.size();
+        wr.write(nNodes + "\n");
+        for (String s : avenidas.keys()) {
+            wr.write(avenidas.get(s).getId() + ", " + avenidas.get(s).getNome());
+            wr.write("\n" + avenidas.get(s).getNodes().size() + "\n");
+            for (Object o : avenidas.get(s).getNodes()) {
+                if(o instanceof Poi){
+                    int nNodes1 = pois.size();
+                    wr.write(nNodes1 + "\n");
+                    for (String s1 : pois.keys()) {
+                        wr.write(pois.get(s1).getId() + ", " + pois.get(s1).getNome() + ", " + pois.get(s1).getTipo() + ", " +
+                                pois.get(s1).getGPS().getLatitude() + ", " +
+                                pois.get(s1).getGPS().getLongitude() + ", " + String.valueOf(pois.get(s1).getMyEtiqueta().size()));
+                        for (Etiqueta e : pois.get(s1).getMyEtiqueta()) {
+                            wr.write(e.getId() + ", " + e.getDescricao());
+                        }
+                        wr.write("\n" + pois.get(s1).getLogs().size() + "\n");
+                        for (int i : pois.get(s1).getLogs().keys()) {
+                            wr.write(pois.get(s1).getLogs().get(i).toString());
+                        }
+                    }
+                }
+                else if(o instanceof Curva){
+                    int nNodes2 = curvas.size();
+                    wr.write(nNodes2 + "\n");
+                    for (String s2 : curvas.keys()) {
+                        wr.write(curvas.get(s2).getId() + ", " + curvas.get(s2).getNome() + ", "
+                                + String.valueOf(curvas.get(s2).getGPS().size()));
+                        for (Point p : curvas.get(s2).getGPS()) {
+                            wr.write("Gps: " + p.getLatitude() + " | " + p.getLongitude() + "\n");
+                        }
+                        wr.write("\n" + curvas.get(s2).getMyEtiqueta().size() + "\n");
+                        for (Etiqueta e : curvas.get(s2).getMyEtiqueta()) {
+                            wr.write(e.getId() + ", " + e.getDescricao());
+                        }
+                        wr.write("\n" + curvas.get(s2).getLogs().size() + "\n");
+                        for (int i : curvas.get(s2).getLogs().keys()) {
+                            wr.write(curvas.get(s2).getLogs().get(i).toString());
+                        }
+                    }
+                }
+                else if(o instanceof Entroncamento){
+                    int nNodes3 = entroncamentos.size();
+                    wr.write(nNodes3 + "\n");
+                    for (String s3 : entroncamentos.keys()) {
+                        wr.write(entroncamentos.get(s3).getId() + ", " + entroncamentos.get(s3).getNome() + ", " +
+                                entroncamentos.get(s3).getGPS().getLatitude() + ", " +
+                                entroncamentos.get(s3).getGPS().getLongitude() + ", " + String.valueOf(entroncamentos.get(s3).getMyEtiqueta().size()));
+                        for (Etiqueta e : entroncamentos.get(s3).getMyEtiqueta()) {
+                            wr.write(e.getId() + ", " + e.getDescricao());
+                        }
+                        wr.write("\n" + entroncamentos.get(s3).getLogs().size() + "\n");
+                        for (int i : entroncamentos.get(s3).getLogs().keys()) {
+                            wr.write(entroncamentos.get(s3).getLogs().get(i).toString());
+                        }
+                    }
+                }
+                else if(o instanceof Cruzamento){
+                    int nNodes4 = cruzamentos.size();
+                    wr.write(nNodes4 + "\n");
+                    for (String s4 : cruzamentos.keys()) {
+                        wr.write(cruzamentos.get(s4).getId() + ", " + cruzamentos.get(s4).getNome() + ", "+
+                                cruzamentos.get(s4).getGPS().getLatitude() + ", " +
+                                cruzamentos.get(s4).getGPS().getLongitude() + ", " + String.valueOf(cruzamentos.get(s4).getMyEtiqueta().size()));
+                        for (Etiqueta e : cruzamentos.get(s4).getMyEtiqueta()) {
+                            wr.write(e.getId() + ", " + e.getDescricao());
+                        }
+                        wr.write("\n" + cruzamentos.get(s4).getLogs().size() + "\n");
+                        for (int i : cruzamentos.get(s4).getLogs().keys()) {
+                            wr.write(cruzamentos.get(s4).getLogs().get(i).toString());
+                        }
+                    }
+                }
+
+            }
+            wr.write("\n" + avenidas.get(s).getMyEtiqueta().size() + "\n");
+            for (Etiqueta e : avenidas.get(s).getMyEtiqueta()) {
+                wr.write(e.getId() + ", " + e.getDescricao());
+            }
+        }
+        wr.close();
+    }
+
+    /**
      * Escrita de toda a informação presente nas RedBlack Etiquetas
      */
     public static void escritaFicheiroTxtEtiquetas() throws IOException {
@@ -705,17 +994,15 @@ public class Main {
         /*------------------------------------------------------------------------------------------------------------*/
         //b1.createEtiquetas(etiquetas,p1,"Transito", "e1");
         a1.createEtiquetasNodes(etiquetas, p5, "Transito", "e2");
-        a1.createEtiquetasNodes(etiquetas, p5, "Boca de Incendio Perto", "e3");
-        a1.createEtiquetasNodes(etiquetas, p5, "Combustivel Barato", "e4");
+        System.out.println(a1.getEtiquetas().size());
         /*------------------------------------------------------------------------------------------------------------*/
-        b1.visitarPoi(p1, null);
-        b1.visitarPoi(p8, null);
-        String date_string = "08-05-2022";
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = formatter.parse(date_string);
+        //b1.visitarPoi(p1, null);
+        //.visitarPoi(p8, null);
+        //String date_string = "08-05-2022";
+        //SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        //Date date = formatter.parse(date_string);
         //System.out.println("Date value: "+date);
-        b1.listarPoisVisitados(date);
-
+        //b1.listarPoisVisitados(date);
         //listarAdminUsers();
         //listarPois();
         //listarEtiquetas();

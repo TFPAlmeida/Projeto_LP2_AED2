@@ -19,7 +19,7 @@ public class Basic extends Admin {
    * Utilizador básico não pode criar Etiquetas, então esta função vai sobrepor a mesma da superclass.
    */
 
-  @Override
+
   public void createEtiquetas(RedBlackBST<String, Etiqueta> Etiquetas, Object Node, String descricao, String nome){
     System.out.println("ERRO! { \n\tUtilizadores Basic não podem criar Etiquetas!\n\t" +
             this.getId() + ", " + this.getNome());
