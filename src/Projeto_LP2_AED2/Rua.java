@@ -10,10 +10,12 @@ public class Rua extends Ways{
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Rua(String nome, int velocidade, Object node1, Object node2) {
+    public Rua(String nome, float velocidade, Object node1, Object node2) {
         super(nome, velocidade);
-        this.node1 = node1;
-        this.node2 = node2;
+        //if(node1 instanceof Node && node2 instanceof Node) {
+            this.node1 = node1;
+            this.node2 = node2;
+        //}
     }
 
     /*---------------------------------------------------------------------------------------------------------------*/

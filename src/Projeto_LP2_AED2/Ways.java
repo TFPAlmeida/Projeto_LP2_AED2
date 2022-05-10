@@ -14,14 +14,14 @@ public class Ways implements Serializable {
 
     private String Nome;
 
-    private int Velocidade;
+    private float Velocidade;
 
     private ArrayList<Etiqueta> myEtiqueta = new ArrayList<>();
 
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Ways(String nome, int velocidade) {
+    public Ways(String nome, float velocidade) {
         Id = ++count;
         Nome = nome;
         Velocidade = velocidade;
@@ -29,9 +29,9 @@ public class Ways implements Serializable {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public int getVelocidade() {return Velocidade;}
+    public float getVelocidade() {return Velocidade;}
 
-    public void setVelocidade(int velocidade) {Velocidade = velocidade;}
+    public void setVelocidade(float velocidade) {Velocidade = velocidade;}
 
     public int getId() {return Id;}
 

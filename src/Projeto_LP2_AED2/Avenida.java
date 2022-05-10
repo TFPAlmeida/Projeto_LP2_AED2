@@ -8,8 +8,9 @@ public class Avenida extends Ways{
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Avenida(String nome, int velocidade, ArrayList<Object> nodes) {
+    public Avenida(String nome, float velocidade, ArrayList<Object> nodes) {
         super(nome, velocidade);
+
         this.nodes = nodes;
     }
 

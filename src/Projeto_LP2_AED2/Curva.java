@@ -23,11 +23,10 @@ public class Curva extends Node{
         int size = GPS.size();;
         for(int x = 0; x < size; x++){
             if(x == (size) -1){
-                System.out.println("POI {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
+                System.out.println("Curva {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
                         "\tGPS_Inicial: " + GPS.get(0).getLatitude() + " | " + GPS.get(0).getLongitude() + "\n" +
-                        "\tGPS_Final: " + GPS.get(size).getLatitude() + " | " + GPS.get(size).getLongitude()+ "\n\tEtiquetas do Poi:");
+                        "\tGPS_Final: " + GPS.get(size-1).getLatitude() + " | " + GPS.get(size-1).getLongitude()+ "\n\tEtiquetas do Poi:");
                 for (Etiqueta e : this.getMyEtiqueta()) {
-
                     System.out.println("\t\t" + e.getId() + ", " +e.getDescricao() + ";");
                 }
                 if (this.getMyEtiqueta().isEmpty()) {

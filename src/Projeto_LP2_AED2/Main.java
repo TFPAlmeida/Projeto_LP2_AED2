@@ -4,6 +4,7 @@ package Projeto_LP2_AED2;
 import algs4.In;
 import algs4.RedBlackBST;
 import algs4.SeparateChainingHashST;
+
 import javax.xml.crypto.Data;
 import java.awt.dnd.DropTargetEvent;
 import java.io.FileWriter;
@@ -107,23 +108,20 @@ public class Main {
                 return;
             }
             pois.put(((Poi) Node).getNome(), ((Poi) Node));
-        }
-        else if(Node instanceof Cruzamento){
-            if(cruzamentos.contains(((Cruzamento) Node).getNome())){
+        } else if (Node instanceof Cruzamento) {
+            if (cruzamentos.contains(((Cruzamento) Node).getNome())) {
                 System.out.println("Erro, Cruzamento ja existe na DB!");
                 return;
             }
             cruzamentos.put(((Cruzamento) Node).getNome(), ((Cruzamento) Node));
-        }
-        else if(Node instanceof Entroncamento){
-            if(entroncamentos.contains(((Entroncamento) Node).getNome())){
+        } else if (Node instanceof Entroncamento) {
+            if (entroncamentos.contains(((Entroncamento) Node).getNome())) {
                 System.out.println("Erro, Entroncamento ja existe na DB!");
                 return;
             }
             entroncamentos.put(((Entroncamento) Node).getNome(), ((Entroncamento) Node));
-        }
-        else if(Node instanceof Curva){
-            if(curvas.contains(((Curva) Node).getNome())){
+        } else if (Node instanceof Curva) {
+            if (curvas.contains(((Curva) Node).getNome())) {
                 System.out.println("Erro, Entroncamento ja existe na DB!");
                 return;
             }
@@ -149,8 +147,7 @@ public class Main {
                 wr.close();
                 pois.delete(((Poi) Node).getNome());
             } else System.out.println("Erro, o node nao existe nao DB!");
-        }
-        else if(Node instanceof Cruzamento){
+        } else if (Node instanceof Cruzamento) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Cruzamento) Node).getId() + ", " + ((Cruzamento) Node).getNome() + ";\n");
             wr.write(((Cruzamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -163,8 +160,7 @@ public class Main {
             }
             wr.close();
             cruzamentos.delete(((Cruzamento) Node).getNome());
-        }
-        else if(Node instanceof Entroncamento){
+        } else if (Node instanceof Entroncamento) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Entroncamento) Node).getId() + ", " + ((Entroncamento) Node).getNome() + ";\n");
             wr.write(((Entroncamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -177,8 +173,7 @@ public class Main {
             }
             wr.close();
             entroncamentos.delete(((Entroncamento) Node).getNome());
-        }
-        else if(Node instanceof Curva){
+        } else if (Node instanceof Curva) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Curva) Node).getId() + ", " + ((Curva) Node).getNome() + ";\n");
             wr.write(((Curva) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -216,8 +211,7 @@ public class Main {
             pois.get(name).getGPS().setLatitude(latitude);
             pois.get(name).getGPS().setLatitude(longitude);
             pois.get(name).setVeiculo(veiculo);
-        }
-        else if(Node instanceof Cruzamento){
+        } else if (Node instanceof Cruzamento) {
             String name = ((Cruzamento) Node).getNome();
             if (!cruzamentos.contains(name)) {
                 System.out.println("Erro Node nao registado na DB!");
@@ -226,8 +220,7 @@ public class Main {
             cruzamentos.get(name).setNome(nome);
             cruzamentos.get(name).getGPS().setLatitude(latitude);
             cruzamentos.get(name).getGPS().setLatitude(longitude);
-        }
-        else if(Node instanceof Entroncamento){
+        } else if (Node instanceof Entroncamento) {
             String name = ((Entroncamento) Node).getNome();
             if (!entroncamentos.contains(name)) {
                 System.out.println("Erro Node nao registado na DB!");
@@ -236,8 +229,7 @@ public class Main {
             entroncamentos.get(name).setNome(nome);
             entroncamentos.get(name).getGPS().setLatitude(latitude);
             entroncamentos.get(name).getGPS().setLatitude(longitude);
-        }
-        else if(Node instanceof Curva){
+        } else if (Node instanceof Curva) {
             String name = ((Curva) Node).getNome();
             if (!curvas.contains(name)) {
                 System.out.println("Erro Node nao registado na DB!");
@@ -248,28 +240,28 @@ public class Main {
     }
 
     public static void listarPois() {
-        System.out.println("Nodes: \n");
+        System.out.println("Pois: \n");
         for (String poi : pois.keys()) {
             pois.get(poi).tostring();
         }
     }
 
     public static void listarEntroncamentos() {
-        System.out.println("Nodes: \n");
+        System.out.println("Entrocamentos: \n");
         for (String entrocamento : entroncamentos.keys()) {
             entroncamentos.get(entrocamento).tostring();
         }
     }
 
     public static void listarCruzamentos() {
-        System.out.println("Nodes: \n");
+        System.out.println("Cruzamentos: \n");
         for (String cruzamento : cruzamentos.keys()) {
             cruzamentos.get(cruzamento).tostring();
         }
     }
 
     public static void listarCurvas() {
-        System.out.println("Nodes: \n");
+        System.out.println("Curvas: \n");
         for (String curva : curvas.keys()) {
             curvas.get(curva).tostring();
         }
@@ -493,6 +485,79 @@ public class Main {
     /*---------------------------------------------------------------------------------------------------------------*/
 
     /**
+     * Le o ficheiro de nodes
+     */
+    public static void leituraFicheiroNodesTxt() {
+        In in = new In(inputNodestxt);
+
+        while (!in.isEmpty()) {
+            int l = Integer.parseInt(in.readLine());
+            for (int i = 0; i < l; i++) {
+                String line = in.readLine();
+                String[] fields = line.split(";");
+                switch (fields[0]) {
+                    case "Poi" -> {
+                        Poi p = new Poi(fields[1], fields[2], Float.parseFloat(fields[3]), Float.parseFloat(fields[4]), fields[5]);
+                        addNode(p);
+                    }
+                    case "Curva" -> {
+                        ArrayList<Point> GPS = new ArrayList<>();
+                        Point p1 = new Point(Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
+                        GPS.add(p1);
+                        Point p2 = new Point(Float.parseFloat(fields[4]), Float.parseFloat(fields[5]));
+                        GPS.add(p2);
+                        Point p3 = new Point(Float.parseFloat(fields[6]), Float.parseFloat(fields[7]));
+                        GPS.add(p3);
+                        Point p4 = new Point(Float.parseFloat(fields[8]), Float.parseFloat(fields[9]));
+                        GPS.add(p4);
+                        Curva cu = new Curva(fields[1], GPS);
+                        addNode(cu);
+                    }
+                    case "Cruzamento" -> {
+                        Cruzamento cr = new Cruzamento(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
+                        addNode(cr);
+                    }
+                    case "Entroncamento" -> {
+                        Entroncamento e = new Entroncamento(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
+                        addNode(e);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Le o ficheiro de Ways
+     */
+    public static void leituraFicheiroWaysTxt() {
+        In in = new In(inputWaystxt);
+
+        while (!in.isEmpty()) {
+            int l = Integer.parseInt(in.readLine());
+            for (int i = 0; i < l; i++) {
+                String line = in.readLine();
+                String[] fields = line.split(";");
+                switch (fields[0]) {
+                    case "Rua" -> {
+                        Rua r = new Rua(fields[1], Float.parseFloat(fields[2]), fields[3], fields[4]);
+                        addWays(r);
+                    }
+                    case "Avenida" -> {
+                        ArrayList<Object> Nodes = new ArrayList<>();
+                        Nodes.add(fields[3]);
+                        Nodes.add(fields[4]);
+                        Nodes.add(fields[5]);
+                        Nodes.add(fields[6]);
+                        Nodes.add(fields[7]);
+                        Avenida a = new Avenida(fields[1], Float.parseFloat(fields[2]), Nodes);
+                        addWays(a);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Encontrar de todas as ST's, o objeto que tem o nome igual ao que é passado por parametros;
      *
      * @param nome nome a procurar nas ST's;
@@ -569,7 +634,7 @@ public class Main {
         wr.write(nNodes + "\n");
         for (String s : curvas.keys()) {
             wr.write(curvas.get(s).getId() + ", " + curvas.get(s).getNome() + ", "
-                  + String.valueOf(curvas.get(s).getGPS().size()));
+                    + String.valueOf(curvas.get(s).getGPS().size()));
             for (Point p : curvas.get(s).getGPS()) {
                 wr.write("Gps: " + p.getLatitude() + " | " + p.getLongitude() + "\n");
             }
@@ -594,7 +659,7 @@ public class Main {
         int nNodes = cruzamentos.size();
         wr.write(nNodes + "\n");
         for (String s : cruzamentos.keys()) {
-            wr.write(cruzamentos.get(s).getId() + ", " + cruzamentos.get(s).getNome() + ", "+
+            wr.write(cruzamentos.get(s).getId() + ", " + cruzamentos.get(s).getNome() + ", " +
                     cruzamentos.get(s).getGPS().getLatitude() + ", " +
                     cruzamentos.get(s).getGPS().getLongitude() + ", " + String.valueOf(cruzamentos.get(s).getMyEtiqueta().size()));
             for (Etiqueta e : cruzamentos.get(s).getMyEtiqueta()) {
@@ -637,7 +702,7 @@ public class Main {
         int nNodes = ruas.size();
         wr.write(nNodes + "\n");
         for (String s : ruas.keys()) {
-            wr.write(ruas.get(s).getId() + ", " + ruas.get(s).getNome() + ", "  +
+            wr.write(ruas.get(s).getId() + ", " + ruas.get(s).getNome() + ", " +
                     ruas.get(s).getNode1().toString() + ", " +
                     ruas.get(s).getNode2().toString() + ", " + String.valueOf(ruas.get(s).getMyEtiqueta().size()));
             for (Etiqueta e : ruas.get(s).getMyEtiqueta()) {
@@ -656,7 +721,7 @@ public class Main {
             wr.write(avenidas.get(s).getId() + ", " + avenidas.get(s).getNome());
             wr.write("\n" + avenidas.get(s).getNodes().size() + "\n");
             for (Object o : avenidas.get(s).getNodes()) {
-                if(o instanceof Poi){
+                if (o instanceof Poi) {
                     int nNodes1 = pois.size();
                     wr.write(nNodes1 + "\n");
                     for (String s1 : pois.keys()) {
@@ -671,8 +736,7 @@ public class Main {
                             wr.write(pois.get(s1).getLogs().get(i).toString());
                         }
                     }
-                }
-                else if(o instanceof Curva){
+                } else if (o instanceof Curva) {
                     int nNodes2 = curvas.size();
                     wr.write(nNodes2 + "\n");
                     for (String s2 : curvas.keys()) {
@@ -690,8 +754,7 @@ public class Main {
                             wr.write(curvas.get(s2).getLogs().get(i).toString());
                         }
                     }
-                }
-                else if(o instanceof Entroncamento){
+                } else if (o instanceof Entroncamento) {
                     int nNodes3 = entroncamentos.size();
                     wr.write(nNodes3 + "\n");
                     for (String s3 : entroncamentos.keys()) {
@@ -706,12 +769,11 @@ public class Main {
                             wr.write(entroncamentos.get(s3).getLogs().get(i).toString());
                         }
                     }
-                }
-                else if(o instanceof Cruzamento){
+                } else if (o instanceof Cruzamento) {
                     int nNodes4 = cruzamentos.size();
                     wr.write(nNodes4 + "\n");
                     for (String s4 : cruzamentos.keys()) {
-                        wr.write(cruzamentos.get(s4).getId() + ", " + cruzamentos.get(s4).getNome() + ", "+
+                        wr.write(cruzamentos.get(s4).getId() + ", " + cruzamentos.get(s4).getNome() + ", " +
                                 cruzamentos.get(s4).getGPS().getLatitude() + ", " +
                                 cruzamentos.get(s4).getGPS().getLongitude() + ", " + String.valueOf(cruzamentos.get(s4).getMyEtiqueta().size()));
                         for (Etiqueta e : cruzamentos.get(s4).getMyEtiqueta()) {
@@ -906,7 +968,8 @@ public class Main {
     /*---------------------------------------------------------------------------------------------------------------*/
 
     public static void main(String[] args) throws IOException, ParseException {
-
+        leituraFicheiroNodesTxt();
+        leituraFicheiroWaysTxt();
         /*------------------------------------------------------------------------------------------------------------*/
         /** USERS */
         //Manuel
@@ -921,81 +984,16 @@ public class Main {
         //Fernando
         Admin a1 = new Admin("Fernando", 41.1740298f, -8.6132806f, "CarroEletrico");
         addUser(a1);
+        a1.createEtiquetasNodes(etiquetas,pois.get("p1"),"oi","e1");
         //Joana
         Admin a2 = new Admin("Joana", 0, 0, "CarroEletrico");
         addUser(a2);
         //Maria
         Admin a3 = new Admin("Maria", 0, 0, "CarroEletrico");
         addUser(a3);
+        /*------------------------------------------------------------------------------------------------------------*/
 
-        /*------------------------------------------------------------------------------------------------------------*/
-        /** Nodes */
 
-        Poi p1 = new Poi("p1", "EstacaoEletrica", 41.1740298f, -8.6132806f, "CarroEletrico");
-        addNode(p1);
-        Poi p2 = new Poi("p2", "EstacaoEletrica", 41.1722618f, -8.6126820f, "BicicletaEletrica");
-        addNode(p2);
-        Poi p3 = new Poi("p3", "Escola", 41.1710753f, -8.6128402f, "Autocarro");
-        addNode(p3);
-        Poi p4 = new Poi("p4", "Cinema", 41.1703690f, -8.6129333f, "Autocarro");
-        addNode(p4);
-        Poi p5 = new Poi("p5", "EstacaoEletrica", 41.1699072f, -8.6129174f, "BicicletaEletrica");
-        addNode(p5);
-        Poi p6 = new Poi("p6", "Museu", 41.1696617f, -8.6128633f, "Autocarro");
-        addNode(p6);
-        Poi p7 = new Poi("p7", "EstacaoEletrica", 41.1670140f, -8.6117522f, "BicicletaEletrica");
-        addNode(p7);
-        Poi p8 = new Poi("p8", "Cinema", 41.1727151f, -8.6127041f, "CarroEletrico");
-        addNode(p8);
-        Poi p9 = new Poi("p9", "EstacaoEletrica", 41.1726118f, -8.6111237f, "BicicletaEletrica");
-        addNode(p9);
-        Poi p10 = new Poi("p10", "Museu", 41.1709836f, -8.6113112f, "CarroEletrico");
-        addNode(p10);
-        Poi p11 = new Poi("p11", "Escola", 41.1711021f, -8.6128045f, "CarroEletrico");
-        addNode(p11);
-        Poi p12 = new Poi("p12", "EstacaoEletrica", 41.1722967f, -8.6126472f, "BicicletaEletrica");
-        addNode(p12);
-        Poi p13 = new Poi("p13", "EstacaoEletrica", 41.1718292f, -8.6127436f, "CarroEletrico");
-        addNode(p13);
-        Poi p14 = new Poi("p14", "Escola", 41.1739403f, -8.6103814f, "CarroEletrico");
-        addNode(p14);
-        Poi p15 = new Poi("p15", "Museu", 41.1727672f, -8.6103785f, "BicicletaEletrica");
-        addNode(p15);
-        Poi p16 = new Poi("p16", "Museu", 41.1677569f, -8.6107657f, "CarroEletrico");
-        addNode(p16);
-        Poi p17 = new Poi("p17", "Escola", 41.1695191f, -8.6084611f, "BicicletaEletrica");
-        addNode(p17);
-        Poi p18 = new Poi("p18", "Cinema", 41.1709494f, -8.6112781f, "Autocarro");
-        addNode(p18);
-        Poi p19 = new Poi("p19", "EstacaoEletrica", 41.1712961f, -8.6128154f, "CarroEletrico");
-        addNode(p19);
-        Poi p20 = new Poi("p20", "Cinema", 41.1738924f, -8.6132242f, "BicicletaEletrica");
-        addNode(p20);
-        Poi p21 = new Poi("p21", "EstacaoEletrica", 41.1736241f, -8.6131209f, "BicicletaEletrica");
-        addNode(p21);
-        Poi p22 = new Poi("p22", "Escola", 41.1728369f, -8.6128570f, "BicicletaEletrica");
-        addNode(p22);
-        Poi p23 = new Poi("p23", "EstacaoEletrica", 41.1727692f, -8.6128188f, "CarroEletrico");
-        addNode(p23);
-        Poi p24 = new Poi("p24", "Cinema", 41.1729352f, -8.6095116f, "CarroEletrico");
-        addNode(p24);
-        Poi p25 = new Poi("p25", "Escola", 41.1729427f, -8.6094669f, "BicicletaEletrica");
-        addNode(p25);
-        Poi p26 = new Poi("p26", "EstacaoEletrica", 41.1729674f, -8.6093197f, "CarroEletrico");
-        addNode(p26);
-        Poi p27 = new Poi("p27", "Museu", 41.1717464f, -8.6127544f, "BicicletaEletrica");
-        addNode(p27);
-        Poi p28 = new Poi("p28", "EstacaoEletrica", 41.1736583f, -8.6103807f, "BicicletaEletrica");
-        addNode(p28);
-        Poi p29 = new Poi("p29", "EstacaoEletrica", 41.1728373f, -8.6103787f, "CarroEletrico");
-        addNode(p29);
-        Poi p30 = new Poi("p30", "Escola", 41.1710618f, -8.6126606f, "Autocarro");
-        addNode(p30);
-        /*------------------------------------------------------------------------------------------------------------*/
-        //b1.createEtiquetas(etiquetas,p1,"Transito", "e1");
-        a1.createEtiquetasNodes(etiquetas, p5, "Transito", "e2");
-        System.out.println(a1.getEtiquetas().size());
-        /*------------------------------------------------------------------------------------------------------------*/
         //b1.visitarPoi(p1, null);
         //.visitarPoi(p8, null);
         //String date_string = "08-05-2022";
@@ -1006,6 +1004,14 @@ public class Main {
         //listarAdminUsers();
         //listarPois();
         //listarEtiquetas();
+
+        //listarPois();
+        //listarEntroncamentos();
+        //listarCruzamentos();
+        //listarCurvas();
+
+        listarPois();
+
     }
 
 }

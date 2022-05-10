@@ -6,9 +6,10 @@ public class Cruzamento extends Node{
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Cruzamento(String nome, Point GPS) {
+    public Cruzamento(String nome, float latitude, float longitude) {
         super(nome);
-        this.GPS = GPS;
+        this.GPS.setLatitude(latitude);
+        this.GPS.setLongitude(longitude);
     }
 
     /*---------------------------------------------------------------------------------------------------------------*/
@@ -18,7 +19,7 @@ public class Cruzamento extends Node{
     public void setGPS(Point GPS) {this.GPS = GPS;}
 
     public void tostring() {
-        System.out.println("POI {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
+        System.out.println("Cruzamento {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
                 "\tGPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\n\tEtiquetas do Poi:");
         for (Etiqueta e : this.getMyEtiqueta()) {
 
