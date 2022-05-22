@@ -1,15 +1,15 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 import java.util.ArrayList;
 
-public class Curva extends Node{
+public class Curva extends Nodes {
 
     private ArrayList<Point> GPS = new ArrayList<>();
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Curva(String nome, ArrayList<Point> GPS) {
-        super(nome);
+    public Curva(String tipo, String nome, ArrayList<Point> GPS) {
+        super(tipo, nome);
         this.GPS = GPS;
     }
 

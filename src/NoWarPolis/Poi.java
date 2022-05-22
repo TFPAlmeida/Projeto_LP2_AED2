@@ -1,12 +1,9 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
-import algs4.RedBlackBST;
-import java.sql.Date;
-
-public class Poi extends Node {
+public class Poi extends Nodes {
 
 
-  private String Tipo;
+  private String Tipo1;
 
   private Point GPS = new Point();
 
@@ -15,9 +12,9 @@ public class Poi extends Node {
 
   /*---------------------------------------------------------------------------------------------------------------*/
 
-  public Poi(String nome, String tipo, float latitude, float longitude, String veiculo) {
-    super(nome);
-    Tipo = tipo;
+  public Poi(String tipo, String nome, String tipo1, float latitude, float longitude, String veiculo) {
+    super(tipo, nome);
+    Tipo1 = tipo1;
     this.GPS.setLatitude(latitude);
     this.GPS.setLongitude(longitude);
     Veiculo = veiculo;
@@ -25,9 +22,9 @@ public class Poi extends Node {
 
   /*---------------------------------------------------------------------------------------------------------------*/
 
-  public String getTipo() {return Tipo;}
+  public String getTipo1() {return Tipo1;}
 
-  public void setTipo(String tipo) {Tipo = tipo;}
+  public void setTipo1(String tipo) {Tipo1 = tipo;}
 
   public Point getGPS() {return GPS;}
 
@@ -39,7 +36,7 @@ public class Poi extends Node {
 
 
   public void tostring() {
-    System.out.println("POI {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome()  + ", Tipo: " + Tipo +";\n"+
+    System.out.println("POI {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome()  + ", Tipo: " + Tipo1 +";\n"+
             "\tGPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\n\tEtiquetas do Poi:");
     for (Etiqueta e : this.getMyEtiqueta()) {
 

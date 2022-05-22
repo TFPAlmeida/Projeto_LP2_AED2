@@ -1,13 +1,13 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
-public class Entroncamento extends Node{
+public class Cruzamento extends Nodes {
 
     private Point GPS = new Point();
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Entroncamento(String nome,float latitude, float longitude) {
-        super(nome);
+    public Cruzamento(String tipo, String nome, float latitude, float longitude) {
+        super(tipo, nome);
         this.GPS.setLatitude(latitude);
         this.GPS.setLongitude(longitude);
     }
@@ -19,7 +19,7 @@ public class Entroncamento extends Node{
     public void setGPS(Point GPS) {this.GPS = GPS;}
 
     public void tostring() {
-        System.out.println("Entroncamento {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
+        System.out.println("Cruzamento {\n" + "\tID=" + this.getId() + ", Nome: " + this.getNome() +";\n"+
                 "\tGPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\n\tEtiquetas do Poi:");
         for (Etiqueta e : this.getMyEtiqueta()) {
 
@@ -32,4 +32,5 @@ public class Entroncamento extends Node{
         }
         System.out.println("\n}\n");
     }
+
 }

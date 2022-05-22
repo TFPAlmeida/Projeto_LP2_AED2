@@ -1,4 +1,4 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,8 @@ public class Avenida extends Ways{
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Avenida(String nome, float velocidade, ArrayList<Object> nodes) {
-        super(nome, velocidade);
+    public Avenida(String tipo, String nome, float velocidade, ArrayList<Object> nodes) {
+        super(tipo, nome, velocidade);
 
         this.nodes = nodes;
     }

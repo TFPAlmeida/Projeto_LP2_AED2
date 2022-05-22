@@ -1,6 +1,4 @@
-package Projeto_LP2_AED2;
-
-import java.util.ArrayList;
+package NoWarPolis;
 
 public class Rua extends Ways{
 
@@ -10,8 +8,8 @@ public class Rua extends Ways{
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Rua(String nome, float velocidade, Object node1, Object node2) {
-        super(nome, velocidade);
+    public Rua(String tipo, String nome, float velocidade, Object node1, Object node2) {
+        super(tipo, nome, velocidade);
         //if(node1 instanceof Node && node2 instanceof Node) {
             this.node1 = node1;
             this.node2 = node2;

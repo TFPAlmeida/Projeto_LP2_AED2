@@ -1,22 +1,17 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 
 import algs4.In;
 import algs4.RedBlackBST;
 import algs4.SeparateChainingHashST;
 
-import javax.xml.crypto.Data;
-import java.awt.dnd.DropTargetEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
-public class Main {
+public class Base_Dados {
 
     //Path
     private static String inputNodestxt = ("C:\\Users\\tiago\\IdeaProjects\\Projeto_LP2_AED2\\src\\data\\inputNodes.txt");
@@ -237,6 +232,42 @@ public class Main {
             }
             curvas.get(name).setNome(nome);
         }
+    }
+
+    public static Poi getPoi(String nome) {
+        for (String s : pois.keys()) {
+            if (s.equals(nome)) {
+                return pois.get(s);
+            }
+        }
+        return null;
+    }
+
+    public static Entroncamento getEntroncamento(String nome) {
+        for (String s : entroncamentos.keys()) {
+            if (s.equals(nome)) {
+                return entroncamentos.get(s);
+            }
+        }
+        return null;
+    }
+
+    public static Cruzamento getCruzamento(String nome) {
+        for (String s : cruzamentos.keys()) {
+            if (s.equals(nome)) {
+                return cruzamentos.get(s);
+            }
+        }
+        return null;
+    }
+
+    public static Curva getCurva(String nome) {
+        for (String s : curvas.keys()) {
+            if (s.equals(nome)) {
+                return curvas.get(s);
+            }
+        }
+        return null;
     }
 
     public static void listarPois() {
@@ -496,11 +527,11 @@ public class Main {
                 String line = in.readLine();
                 String[] fields = line.split(";");
                 switch (fields[0]) {
-                    case "Poi" -> {
-                        Poi p = new Poi(fields[1], fields[2], Float.parseFloat(fields[3]), Float.parseFloat(fields[4]), fields[5]);
+                    case "Poi":
+                        Poi p = new Poi(fields[0], fields[1], fields[2], Float.parseFloat(fields[3]), Float.parseFloat(fields[4]), fields[5]);
                         addNode(p);
-                    }
-                    case "Curva" -> {
+                        break;
+                    case "Curva":
                         ArrayList<Point> GPS = new ArrayList<>();
                         Point p1 = new Point(Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
                         GPS.add(p1);
@@ -510,17 +541,17 @@ public class Main {
                         GPS.add(p3);
                         Point p4 = new Point(Float.parseFloat(fields[8]), Float.parseFloat(fields[9]));
                         GPS.add(p4);
-                        Curva cu = new Curva(fields[1], GPS);
+                        Curva cu = new Curva(fields[0], fields[1], GPS);
                         addNode(cu);
-                    }
-                    case "Cruzamento" -> {
-                        Cruzamento cr = new Cruzamento(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
+                        break;
+                    case "Cruzamento":
+                        Cruzamento cr = new Cruzamento(fields[0], fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
                         addNode(cr);
-                    }
-                    case "Entroncamento" -> {
-                        Entroncamento e = new Entroncamento(fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
+                        break;
+                    case "Entroncamento":
+                        Entroncamento e = new Entroncamento(fields[0], fields[1], Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));
                         addNode(e);
-                    }
+                        break;
                 }
             }
         }
@@ -538,24 +569,25 @@ public class Main {
                 String line = in.readLine();
                 String[] fields = line.split(";");
                 switch (fields[0]) {
-                    case "Rua" -> {
-                        Rua r = new Rua(fields[1], Float.parseFloat(fields[2]), fields[3], fields[4]);
+                    case "Rua":
+                        Rua r = new Rua(fields[0], fields[1], Float.parseFloat(fields[2]), fields[3], fields[4]);
                         addWays(r);
-                    }
-                    case "Avenida" -> {
+                        break;
+                    case "Avenida":
                         ArrayList<Object> Nodes = new ArrayList<>();
                         Nodes.add(fields[3]);
                         Nodes.add(fields[4]);
                         Nodes.add(fields[5]);
                         Nodes.add(fields[6]);
                         Nodes.add(fields[7]);
-                        Avenida a = new Avenida(fields[1], Float.parseFloat(fields[2]), Nodes);
+                        Avenida a = new Avenida(fields[0], fields[1], Float.parseFloat(fields[2]), Nodes);
                         addWays(a);
-                    }
+                        break;
                 }
             }
         }
     }
+
 
     /**
      * Encontrar de todas as ST's, o objeto que tem o nome igual ao que é passado por parametros;
@@ -625,7 +657,7 @@ public class Main {
     }
 
     /**
-     * Escrita de toda a informação presente nas ST Pois;
+     * Escrita de toda a informação presente nas ST Curvas;
      */
     public static void escritaFicheiroTxtCurvas() throws IOException {
 
@@ -651,7 +683,7 @@ public class Main {
     }
 
     /**
-     * Escrita de toda a informação presente nas ST Pois;
+     * Escrita de toda a informação presente nas ST Cruzamentos;
      */
     public static void escritaFicheiroTxtCruzamentos() throws IOException {
 
@@ -674,7 +706,7 @@ public class Main {
     }
 
     /**
-     * Escrita de toda a informação presente nas ST Pois;
+     * Escrita de toda a informação presente nas ST Entroncamentos;
      */
     public static void escritaFicheiroTxtEntroncamentos() throws IOException {
 
@@ -696,6 +728,9 @@ public class Main {
         wr.close();
     }
 
+    /**
+     * Escrita de toda a informação presente nas ST Ruas;
+     */
     public static void escritaFicheiroTxtRuas() throws IOException {
 
         FileWriter wr = new FileWriter(waystxt, true);
@@ -712,6 +747,9 @@ public class Main {
         wr.close();
     }
 
+    /**
+     * Escrita de toda a informação presente nas ST Avenidas;
+     */
     public static void escritaFicheiroTxtAvenidas() throws IOException {
 
         FileWriter wr = new FileWriter(waystxt, true);
@@ -868,11 +906,9 @@ public class Main {
         int count = 0;
         Object[] UserId = new Object[5];
         Integer[] UserCount = new Integer[5];
-        System.out.println("Top Utilizadores com mais Caches Visitadas de '" +
-                dataInicio.getYear() + "/" + dataInicio.getMonth() + "/" + dataInicio.getDay() + " - " +
-                dataInicio.getHours() + ":" + dataInicio.getMinutes() + ":" + dataInicio.getSeconds() +
-                "' a '" + dataFim.getYear() + "/" + dataFim.getMonth() + "/" + dataFim.getDay() + " - " +
-                dataFim.getHours() + ":" + dataFim.getMinutes() + ":" + dataFim.getSeconds() + "' : ");
+        System.out.println("Top Utilizadores com mais Nodes Visitadas de '" +
+                dataInicio.getYear() + "/" + dataInicio.getMonth() + "/" + dataInicio.getDay() +
+                "' a '" + dataFim.getYear() + "/" + dataFim.getMonth() + "/" + dataFim.getDay() + "' : ");
         for (int i : basics.keys()) {
             for (Poi j : basics.get(i).getPoisVisitados()) {
                 for (Integer log : j.getLogs().keys()) {
@@ -971,26 +1007,7 @@ public class Main {
         leituraFicheiroNodesTxt();
         leituraFicheiroWaysTxt();
         /*------------------------------------------------------------------------------------------------------------*/
-        /** USERS */
-        //Manuel
-        Basic b1 = new Basic("Manuel", 41.1740298f, -8.6132806f, "CarroEletrico");
-        addUser(b1);
-        //Pedro
-        Basic b2 = new Basic("Pedro", 0, 0, "CarroEletrico");
-        addUser(b2);
-        //Filomena
-        Basic b3 = new Basic("Filomena", 0, 0, "CarroEletrico");
-        addUser(b3);
-        //Fernando
-        Admin a1 = new Admin("Fernando", 41.1740298f, -8.6132806f, "CarroEletrico");
-        addUser(a1);
-        a1.createEtiquetasNodes(etiquetas,pois.get("p1"),"oi","e1");
-        //Joana
-        Admin a2 = new Admin("Joana", 0, 0, "CarroEletrico");
-        addUser(a2);
-        //Maria
-        Admin a3 = new Admin("Maria", 0, 0, "CarroEletrico");
-        addUser(a3);
+
         /*------------------------------------------------------------------------------------------------------------*/
 
 

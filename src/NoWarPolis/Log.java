@@ -1,4 +1,4 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Log implements Serializable{
 
-    static AtomicInteger nextId = new AtomicInteger();
+    private static int count = 0;
     private int id;
 
     private Date date;
@@ -21,18 +21,13 @@ public class Log implements Serializable{
     /*---------------------------------------------------------------------------------------------------------------*/
 
     public Log(Date date, String info, String mensagem) {
-        id = nextId.incrementAndGet();
+        id = count++;
         this.date = date;
         this.Info = info;
         Mensagem = mensagem;
     }
 
     /*---------------------------------------------------------------------------------------------------------------*/
-
-    public static AtomicInteger getNextId() {return nextId;}
-
-    public static void setNextId(AtomicInteger nextId) {
-        Log.nextId = nextId;}
 
     public int getId() {return id;}
 

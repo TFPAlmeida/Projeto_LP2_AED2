@@ -1,4 +1,4 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 public class Point {
 

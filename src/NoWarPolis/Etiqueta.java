@@ -1,7 +1,7 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 public class Etiqueta {
-
+    private static int count = 0;
     private int Id;
 
     private String Nome;
@@ -15,16 +15,16 @@ public class Etiqueta {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Etiqueta(int id, String nome, String nomeCriador, String descricao, float latitude, float longitude) {
-        Id = id;
+    public Etiqueta(String nome, String nomeCriador, String descricao, float latitude, float longitude) {
+        Id = count++;
         Nome = nome;
         this.nomeCriador = nomeCriador;
         Descricao = descricao;
         this.GPS = new Point(latitude, longitude);
     }
 
-    public Etiqueta(int id, String nome, String nomeCriador, String descricao) {
-        Id = id;
+    public Etiqueta(String nome, String nomeCriador, String descricao) {
+        Id = count++;
         Nome = nome;
         this.nomeCriador = nomeCriador;
         Descricao = descricao;

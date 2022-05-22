@@ -1,13 +1,15 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 import algs4.RedBlackBST;
 
 public class Basic extends Admin {
-
-
-  public Basic(String nome, float latitude, float longitude, String myVeiculo) {
-    super(nome, latitude, longitude, myVeiculo);
+  public Basic(String tipo, String nome, String veiculo) {
+    super(tipo, nome, veiculo);
   }
+
+
+
+
 
   /*---------------------------------------------------------------------------------------------------------------*/
 

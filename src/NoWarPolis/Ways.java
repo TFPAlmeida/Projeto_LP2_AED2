@@ -1,9 +1,6 @@
-package Projeto_LP2_AED2;
-
-import algs4.RedBlackBST;
+package NoWarPolis;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 
 public class Ways implements Serializable {
@@ -11,6 +8,8 @@ public class Ways implements Serializable {
     private static int count = 0;
 
     private int Id;
+
+    private String Tipo;
 
     private String Nome;
 
@@ -21,8 +20,9 @@ public class Ways implements Serializable {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public Ways(String nome, float velocidade) {
+    public Ways(String tipo, String nome, float velocidade) {
         Id = ++count;
+        this.Tipo = tipo;
         Nome = nome;
         Velocidade = velocidade;
     }
@@ -36,6 +36,10 @@ public class Ways implements Serializable {
     public int getId() {return Id;}
 
     public void setId(int id) {Id = id;}
+
+    public String getTipo() {return Tipo;}
+
+    public void setTipo(String tipo) {Tipo = tipo;}
 
     public String getNome() {return Nome;}
 

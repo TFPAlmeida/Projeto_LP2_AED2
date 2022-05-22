@@ -1,7 +1,8 @@
-package Projeto_LP2_AED2;
+package NoWarPolis;
 
 import algs4.RedBlackBST;
 import algs4.SeparateChainingHashST;
+import algs4.RedBlackBST;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,9 +18,9 @@ public abstract class User {
 
     private int Id;
 
-    private String Nome;
+    private String Tipo;
 
-    private Point GPS = new Point();
+    private String Nome;
 
     private String veiculo;
 
@@ -30,11 +31,10 @@ public abstract class User {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    public User(String nome, float latitude, float longitude, String veiculo) {
+    public User(String tipo,String nome, String veiculo) {
         this.Id = ++countUser;
+        this.Tipo = tipo;
         Nome = nome;
-        this.GPS.setLatitude(latitude);
-        this.GPS.setLongitude(longitude);
         this.veiculo = veiculo;
     }
 
@@ -48,20 +48,16 @@ public abstract class User {
         Id = id;
     }
 
+    public String getTipo() {return Tipo;}
+
+    public void setTipo(String tipo) {Tipo = tipo;}
+
     public String getNome() {
         return Nome;
     }
 
     public void setNome(String nome) {
         Nome = nome;
-    }
-
-    public Point getGPS() {
-        return GPS;
-    }
-
-    public void setGPS(Point GPS) {
-        this.GPS = GPS;
     }
 
     public String getVeiculo() {
@@ -89,7 +85,7 @@ public abstract class User {
 
     public void tostring() {
         System.out.println("Utilizador {\n" + "\tID=" + Id + ", Nome: " + Nome  + ";\n" +
-                 "GPS: " + GPS.getLatitude() + " | " + GPS.getLongitude() + "\tEtiquetas do Utilizador:");
+                 "\tEtiquetas do Utilizador:");
         for (Etiqueta e : this.getEtiquetas()) {
 
                 System.out.println("\t\t" + e.getId() + ", " +e.getDescricao() + ";");
@@ -111,7 +107,7 @@ public abstract class User {
     public void createEtiquetasNodes(RedBlackBST<String, Etiqueta> etiquetas, Object Node, String descricao, String nome) {
         int id = ++countEtiqueta;
         if(Node instanceof Poi){
-            Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao, ((Poi) Node).getGPS().getLatitude(),
+            Etiqueta ET = new Etiqueta(nome, this.getNome(), descricao, ((Poi) Node).getGPS().getLatitude(),
                     ((Poi) Node).getGPS().getLongitude());
             if (etiquetas.contains(nome) || this.getEtiquetas().contains(ET)) {
                 System.out.println("Erro, Etiqueta ja existe na DB!");
@@ -125,7 +121,7 @@ public abstract class User {
     public void createEtiquetasWays(RedBlackBST<String, Etiqueta> etiquetas, Object Ways, String descricao, String nome) {
         int id = ++countEtiqueta;
         if(Ways instanceof Rua){
-            Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao);
+            Etiqueta ET = new Etiqueta(nome, this.getNome(), descricao);
             if (etiquetas.contains(nome) || this.getEtiquetas().contains(ET)) {
                 System.out.println("Erro, Etiqueta ja existe na DB!");
                 return;
@@ -134,7 +130,7 @@ public abstract class User {
             etiquetas.put(nome, ET);
         }
         else if(Ways instanceof Avenida){
-            Etiqueta ET = new Etiqueta(id, nome, this.getNome(), descricao);
+            Etiqueta ET = new Etiqueta(nome, this.getNome(), descricao);
             if (etiquetas.contains(nome) || this.getEtiquetas().contains(ET)) {
                 System.out.println("Erro, Etiqueta ja existe na DB!");
                 return;
