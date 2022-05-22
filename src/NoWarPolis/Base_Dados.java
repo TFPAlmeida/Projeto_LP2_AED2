@@ -143,6 +143,7 @@ public class Base_Dados {
                 pois.delete(((Poi) Node).getNome());
             } else System.out.println("Erro, o node nao existe nao DB!");
         } else if (Node instanceof Cruzamento) {
+            if (pois.contains(((Cruzamento) Node).getNome())) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Cruzamento) Node).getId() + ", " + ((Cruzamento) Node).getNome() + ";\n");
             wr.write(((Cruzamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -155,7 +156,9 @@ public class Base_Dados {
             }
             wr.close();
             cruzamentos.delete(((Cruzamento) Node).getNome());
+            } else System.out.println("Erro, o node nao existe nao DB!");
         } else if (Node instanceof Entroncamento) {
+            if (pois.contains(((Entroncamento) Node).getNome())) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Entroncamento) Node).getId() + ", " + ((Entroncamento) Node).getNome() + ";\n");
             wr.write(((Entroncamento) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -168,7 +171,9 @@ public class Base_Dados {
             }
             wr.close();
             entroncamentos.delete(((Entroncamento) Node).getNome());
+            } else System.out.println("Erro, o node nao existe nao DB!");
         } else if (Node instanceof Curva) {
+            if (pois.contains(((Curva) Node).getNome())) {
             FileWriter wr = new FileWriter(nodesRemovidastxt, true);
             wr.write(((Curva) Node).getId() + ", " + ((Curva) Node).getNome() + ";\n");
             wr.write(((Curva) Node).getMyEtiqueta().size() + " etiquetas :\n");
@@ -181,6 +186,7 @@ public class Base_Dados {
             }
             wr.close();
             curvas.delete(((Curva) Node).getNome());
+            } else System.out.println("Erro, o node nao existe nao DB!");
         }
     }
 

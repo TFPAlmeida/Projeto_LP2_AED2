@@ -137,8 +137,8 @@ public class Controller {
     public TextField xEtiquetasTextField;
     public TextField yEtiquetasTextField;
     public TextField descricaoEtiquetasTextField;
-    public Button addTravelBugs;
-    public Button removeTravelBugs;
+    public Button addEtiquetas;
+    public Button removeEtiquetas;
 
 
     public TableView<Etiqueta> etiquetasTable;
@@ -574,6 +574,44 @@ public class Controller {
 
     }
 
+    public void handleEditarNodeTipo(TableColumn.CellEditEvent editedcell) {
+
+        Object node = nodesTable.getSelectionModel().getSelectedItem();
+        if (node instanceof Poi) {
+            if (editedcell.getNewValue().toString().equals("")) return;
+            if (editedcell.getNewValue().toString().equals("Poi") || editedcell.getNewValue().toString().equals("Curva") ||
+                    editedcell.getNewValue().toString().equals("Cruzamento") || editedcell.getNewValue().toString().equals("Entroncamento")) {
+                ((Poi) node).setTipo(editedcell.getNewValue().toString());
+            } else {
+                Alert("Node", "(Poi / Curva / Cruzamento / Entroncamento)", "Tipo de Node introduzido é inválido!");
+            }
+        } else if (node instanceof Curva) {
+            if (editedcell.getNewValue().toString().equals("")) return;
+            if (editedcell.getNewValue().toString().equals("Poi") || editedcell.getNewValue().toString().equals("Curva") ||
+                    editedcell.getNewValue().toString().equals("Cruzamento") || editedcell.getNewValue().toString().equals("Entroncamento")) {
+                ((Curva) node).setTipo(editedcell.getNewValue().toString());
+            } else {
+                Alert("Node", "(Poi / Curva / Cruzamento / Entroncamento)", "Tipo de Node introduzido é inválido!");
+            }
+        } else if (node instanceof Cruzamento) {
+            if (editedcell.getNewValue().toString().equals("")) return;
+            if (editedcell.getNewValue().toString().equals("Poi") || editedcell.getNewValue().toString().equals("Curva") ||
+                    editedcell.getNewValue().toString().equals("Cruzamento") || editedcell.getNewValue().toString().equals("Entroncamento")) {
+                ((Cruzamento) node).setTipo(editedcell.getNewValue().toString());
+            } else {
+                Alert("Node", "(Poi / Curva / Cruzamento / Entroncamento)", "Tipo de Node introduzido é inválido!");
+            }
+        } else if (node instanceof Entroncamento) {
+            if (editedcell.getNewValue().toString().equals("")) return;
+            if (editedcell.getNewValue().toString().equals("Poi") || editedcell.getNewValue().toString().equals("Curva") ||
+                    editedcell.getNewValue().toString().equals("Cruzamento") || editedcell.getNewValue().toString().equals("Entroncamento")) {
+                ((Entroncamento) node).setTipo(editedcell.getNewValue().toString());
+            } else {
+                Alert("Node", "(Poi / Curva / Cruzamento / Entroncamento)", "Tipo de Node introduzido é inválido!");
+            }
+        }
+    }
+
     public void handleEditarNodeX(TableColumn.CellEditEvent editedcell) {
         Object node = nodesTable.getSelectionModel().getSelectedItem();
         if (node instanceof Poi) {
@@ -636,7 +674,7 @@ public class Controller {
         etiquetas.put(et.getNome(), et);
     }
 
-    public void handleEditarEtiquetaUser(TableColumn.CellEditEvent editedcell) {
+    public void handleEditarETUser(TableColumn.CellEditEvent editedcell) {
         int flag = 0;
         Etiqueta et = etiquetasTable.getSelectionModel().getSelectedItem();
         for (int i : basics.keys())
@@ -680,6 +718,49 @@ public class Controller {
             return;
         }
         et.getGPS().setLongitude(Float.parseFloat(editedcell.getNewValue().toString()));
+    }
+
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------- EDITAR ITEMS DA TABELA DE LOGS ------------------------------------------*/
+
+    public void handleEditarNodeLog(TableColumn.CellEditEvent editedcell) {
+        Log log = logsTable.getSelectionModel().getSelectedItem();
+        if ((editedcell.getNewValue().toString().equals("")) || !pois.contains(editedcell.getNewValue().toString())) {
+            Alert("Log", null, "Nome do Cache introduzida não consta na DB!");
+            return;
+        }else if(pois.contains(editedcell.getNewValue().toString())){
+            pois.get(editedcell.getNewValue().toString()).removelogs(log);
+            pois.get(editedcell.getNewValue().toString()).addLogs(log);
+        }else if(curvas.contains(editedcell.getNewValue().toString())){
+            curvas.get(editedcell.getNewValue().toString()).removelogs(log);
+            curvas.get(editedcell.getNewValue().toString()).addLogs(log);
+        }else if(cruzamentos.contains(editedcell.getNewValue().toString())){
+            cruzamentos.get(editedcell.getNewValue().toString()).removelogs(log);
+            cruzamentos.get(editedcell.getNewValue().toString()).addLogs(log);
+        }else if(entroncamentos.contains(editedcell.getNewValue().toString())){
+            entroncamentos.get(editedcell.getNewValue().toString()).removelogs(log);
+            entroncamentos.get(editedcell.getNewValue().toString()).addLogs(log);
+        }
+
+    }
+
+    public void handleEditarInfoLog(TableColumn.CellEditEvent editedcell) {
+        Log log = logsTable.getSelectionModel().getSelectedItem();
+        if ((editedcell.getNewValue().toString().equals(""))) {
+            Alert("Log", null, "Por favor preencha o campo que se encontra vazio!");
+            return;
+        }
+        log.setInfo(editedcell.getNewValue().toString());
+    }
+
+    public void handleEditarMensagemLog(TableColumn.CellEditEvent editedcell) {
+        Log log = logsTable.getSelectionModel().getSelectedItem();
+        if ((editedcell.getNewValue().toString().equals(""))) {
+            log.setMensagem(null);
+            return;
+        }
+        log.setMensagem(editedcell.getNewValue().toString());
     }
 
     /*---------------------------------------------------------------------------------------------------------------*/
